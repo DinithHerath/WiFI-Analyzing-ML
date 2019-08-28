@@ -1,4 +1,4 @@
-# WiFI Analyzer - Machine Learning
+# WiFi Analyzer - Machine Learning
 
  <p align="center"> 
 <img src="https://storage.googleapis.com/ehimages/2019/4/20/img_8a1121bf8e998f93cfa1021cbadcfc3f_1555743958967_original.jpg">
