@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt  # mqtt client library
-import pandas as pd
+import pandas as pd  # data processing library
 import ast  # library for data validation
+import os
 
 broker_url = "broker.hivemq.com"  # broker URL
 broker_port = 1883  # broker port
@@ -19,11 +20,10 @@ def on_message(client, userdata, message):  # on message interrupt
 
 
 def data_store(data_recieved):  # the procedure to do when data recieved
-
     filename = "wifi_data.csv"
     fixed_wifi = {"UoM_Wireless1": -100, "UoM_Wireless6": -100, "UoM_Wireless11": -100, "eduroam1": -100,
                   "eduroam6": -100, "eduroam11": -100, "Jungle Book10": -100,
-                  "PROLINK_H5004NK_8766E11": -100, "UNIC-wifi11": -100}
+                  "PROLINK_H5004NK_8766E11": -100, "UNIC-wifi11": -100}  # this should be changed according to position
     try:
         data = ast.literal_eval(data_recieved.decode("utf-8"))
         print(data)
@@ -34,6 +34,7 @@ def data_store(data_recieved):  # the procedure to do when data recieved
         # formatting data to a data frame and taking transpose
         data_format = pd.Series(data).to_frame().T
         print(data_format)
+        data_format.to_csv(filename, index=False, mode='a', header=(not os.path.exists(filename)))
     except Exception as exc:  # exception handling
         print(exc)
 
