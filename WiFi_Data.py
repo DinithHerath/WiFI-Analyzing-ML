@@ -6,7 +6,7 @@ broker_port = 1883
 
 
 def on_connect(client, userdata, flags, rc):
-    print("Connected With Result Code"(rc))
+    print("Connected With Result Code",(rc))
 
 
 def on_disconnect(client, userdata, rc):
