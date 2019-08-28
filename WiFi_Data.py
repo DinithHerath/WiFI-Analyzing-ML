@@ -9,6 +9,9 @@ def on_connect(client, userdata, flags, rc):
 def on_disconnect(client, userdata, rc):
     print("Client Got Disconnected")
 
+def on_message(client, userdata, message):
+    print("Message Recieved: "+str(message.payload.decode()))
+
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_disconnect = on_disconnect
