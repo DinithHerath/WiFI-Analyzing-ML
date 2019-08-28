@@ -19,13 +19,22 @@ def on_message(client, userdata, message):  # on message interrupt
 
 
 def data_store(data_recieved):  # the procedure to do when data recieved
-    data = ast.literal_eval(data_recieved.decode("utf-8"))
-    print(data)
+
     filename = "wifi_data.csv"
+    fixed_wifi = {"UoM_Wireless1": -100, "UoM_Wireless6": -100, "UoM_Wireless11": -100, "eduroam1": -100,
+                  "eduroam6": -100, "eduroam11": -100, "Jungle Book10": -100,
+                  "PROLINK_H5004NK_8766E11": -100, "UNIC-wifi11": -100}
     try:
-        data_format = pd.Series(data).to_frame().T #formatting data to a data frame and taking transpose
+        data = ast.literal_eval(data_recieved.decode("utf-8"))
+        print(data)
+        for key, value in data.items():
+            if key in fixed_wifi and fixed_wifi[key] == 100:
+                fixed_wifi[key] = int(value)
+        fixed_wifi["id"] = int(data["id"])
+        # formatting data to a data frame and taking transpose
+        data_format = pd.Series(data).to_frame().T
         print(data_format)
-    except Exception as exc: #exception handling
+    except Exception as exc:  # exception handling
         print(exc)
 
 
