@@ -49,11 +49,17 @@ def create_csv():
                   "PROLINK_H5004NK_8766E11": -100, "UNIC-wifi11": -100}
     # this should be changed according to position of the NodeMCU
     # creating header of the output file.
-    with open(filename, 'w', newline='') as csvfile:
-        fieldnames = fixed_wifi.keys()
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-    print("File created.")
+    with open(filename, 'r') as csvfileread:
+        has_header = csv.Sniffer().has_header(csvfileread.read(256)) #checking for the header using sniffer
+        csvfileread.seek(0)    
+    if has_header != True:
+        with open(filename, 'w', newline='') as csvfile:
+            fieldnames = fixed_wifi.keys()
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+        print("File created.")
+    else:
+        print("File already there with header.")
 
 
 client = mqtt.Client()  # defining client
